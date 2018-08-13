@@ -2,6 +2,7 @@ const puppeteer = require('puppeteer');
 
 const { retrieveRedditPost } = require('./reddit-scraper');
 const { pickRandomTags } = require('./utils');
+const config = require('./config');
 
 (async () => {
   try {
@@ -10,12 +11,15 @@ const { pickRandomTags } = require('./utils');
 
     // console.log(redditPost);
 
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({headless: false});
     const page = await browser.newPage();
-    await page.goto('https://www.instagram.com/');
-    await page.screenshot({path: 'example.png'});
+    page.setUserAgent(config.userAgent);
+    page.setViewport({ isMobile: true });
+    await page.goto('https://www.instagram.com/accounts/login/');
 
-    await browser.close();
+    await page.tap('#f277570152f3454');
+
+    // await browser.close();
 
   } catch (error) {
     throw error;
