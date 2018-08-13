@@ -1,3 +1,5 @@
+const imageDownloader = require('image-downloader')
+
 const config = require('./config');
 
 /** picks config.tagsCount random tags from config.tags list
@@ -13,4 +15,21 @@ function pickRandomTags() {
   return res.trim();
 }
 
-module.exports = { pickRandomTags };
+function appendRandomTags(text) {
+  return text + ' ' + pickRandomTags();
+}
+
+/** saves the image to config.imageName
+ * @return {string} image name */
+async function saveImage(url) {
+  const options = {
+    url: url,
+    dest: config.imageName + '.' + url.split('.').pop(),
+  }
+
+  const { filename } = await imageDownloader.image(options);
+
+  return filename;
+}
+
+module.exports = { appendRandomTags, saveImage };

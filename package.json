@@ -15,6 +15,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "dotenv": "^6.0.0",
+    "image-downloader": "^3.4.1",
     "puppeteer": "^1.7.0"
   }
 }

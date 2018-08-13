@@ -23,6 +23,7 @@ const config = {
   ],
   tagsCount: 5,
   userAgent: 'Mozilla/5.0 (Linux; Android 8.0; Pixel 2 Build/OPD3.170816.012) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Mobile Safari/537.36',
+  imageName: 'image',
 }
 
 module.exports = config;
