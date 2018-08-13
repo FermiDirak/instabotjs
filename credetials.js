@@ -5,4 +5,4 @@ const credentials = {
   password: process.env.PASSWORD,
 };
 
-module.exports = { credentials }
+module.exports = credentials;
