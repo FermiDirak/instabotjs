@@ -1,0 +1,19 @@
+{
+  "name": "instajs",
+  "version": "1.0.0",
+  "description": "An app for automating instagram related actions",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bryan Manuele",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.18.3"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "puppeteer": "^1.7.0"
+  }
+}
