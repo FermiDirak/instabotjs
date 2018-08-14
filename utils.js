@@ -39,8 +39,6 @@ async function squareImage(fileName) {
     const dimensions = await sizeOf(fileName);
     const maxDimension = Math.max(dimensions.height, dimensions.width);
 
-    console.log(maxDimension, dimensions);
-
     await sharp(fileName)
       .resize(maxDimension, maxDimension)
       .background({r: 255, g: 255, b: 255, alpha: 1})

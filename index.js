@@ -10,7 +10,7 @@ const USERNAME_SELECTOR = '[name="username"]';
 const PASSWORD_SELECTOR = '[name="password"]';
 const LOGIN_SELECTOR = 'form > span > button';
 
-const NOTNOW_SELECTOR = 'main > div > button';
+const NOTNOW_SELECTOR = '[href="/"]';
 
 const NEWPOST_SELECTOR = `[aria-label="New Post"]`;
 const IMAGE_UPLOAD_SELECTOR = '[accept="image/jpeg"]';
@@ -34,7 +34,6 @@ const CAPTION_SELECTOR = '[aria-label="Write a caption…"]';
   } catch (error) {
     console.error(error);
   }
-
 })();
 
 async function simulateBrowser({ imagePath, caption }) {
