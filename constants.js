@@ -1,3 +1,3 @@
-imageTypes = new Set(['jpg', 'jpeg', 'png']);
+const imageTypes = new Set(['jpg', 'jpeg', 'png']);
 
 module.exports = { imageTypes };
