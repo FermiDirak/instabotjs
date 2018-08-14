@@ -1,4 +1,6 @@
-const imageDownloader = require('image-downloader')
+const imageDownloader = require('image-downloader');
+const sizeOf = require('image-size');
+const sharp = require('sharp');
 
 const config = require('./config');
 
@@ -32,4 +34,23 @@ async function saveImage(url) {
   return filename;
 }
 
-module.exports = { appendRandomTags, saveImage };
+async function squareImage(fileName) {
+  try {
+    const dimensions = await sizeOf(fileName);
+    const maxDimension = Math.max(dimensions.height, dimensions.width);
+
+    console.log(maxDimension, dimensions);
+
+    await sharp(fileName)
+      .resize(maxDimension, maxDimension)
+      .background({r: 255, g: 255, b: 255, alpha: 1})
+      .embed()
+      .toFormat('png')
+      .toFile('postimage.png');
+
+  } catch (error) {
+    throw error;
+  }
+}
+
+module.exports = { appendRandomTags, saveImage, squareImage };

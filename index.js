@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 
 const config = require('./config');
 const credentials = require('./credetials');
-const { appendRandomTags, saveImage } = require('./utils');
+const { appendRandomTags, saveImage, squareImage } = require('./utils');
 
 const { retrieveRedditPost } = require('./reddit-scraper');
 
@@ -24,11 +24,13 @@ const CAPTION_SELECTOR = 'textarea';
   try {
     const redditPost = await retrieveRedditPost();
     redditPost.topComment = appendRandomTags(redditPost.topComment);
-    let fileName = await saveImage(redditPost.imageUrl);
+    const fileName = await saveImage(redditPost.imageUrl);
 
-    fileName = __dirname + '/' + fileName;
+    const imagePath = __dirname + '/' + fileName;
 
-    simulateBrowser({fileName, caption: redditPost.topComment });
+    await squareImage(fileName);
+
+    // await simulateBrowser({imagePath, caption: redditPost.topComment });
 
   } catch (error) {
     console.error(error);
@@ -36,11 +38,10 @@ const CAPTION_SELECTOR = 'textarea';
 
 })();
 
-async function simulateBrowser({ fileName, caption }) {
+async function simulateBrowser({ imagePath, caption }) {
   try {
     const browser = await puppeteer.launch({ headless: false, slowMo: 20 });
-    const page = await browser.newPage()
-    ;
+    const page = await browser.newPage();
     page.setUserAgent(config.userAgent);
 
     /* go to login page */
@@ -72,7 +73,7 @@ async function simulateBrowser({ fileName, caption }) {
     for (let i = 0; i < fileUploadInputs.length; ++i) {
       let fileUploadInput = fileUploadInputs[i];
 
-      await fileUploadInput.uploadFile(fileName);
+      await fileUploadInput.uploadFile(imagePath);
     }
 
     /* confirm image editing */
