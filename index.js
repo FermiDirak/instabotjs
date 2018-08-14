@@ -38,8 +38,9 @@ const CAPTION_SELECTOR = 'textarea';
 
 async function simulateBrowser({ fileName, caption }) {
   try {
-    const browser = await puppeteer.launch({ headless: false });
-    const page = await browser.newPage();
+    const browser = await puppeteer.launch({ headless: false, slowMo: 20 });
+    const page = await browser.newPage()
+    ;
     page.setUserAgent(config.userAgent);
 
     /* go to login page */
