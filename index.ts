@@ -16,7 +16,7 @@ const { retrieveRedditPost } = require('./reddit-scraper');
 
     console.log(redditPost);
 
-    // await instaAutomation.post({imagePath, caption: redditPost.topComment });
+    await instaAutomation.post({imagePath, caption: redditPost.topComment });
 
   } catch (error) {
     console.error(error);
