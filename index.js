@@ -18,7 +18,7 @@ const IMAGE_UPLOAD_SELECTOR = '[accept="image/jpeg"]';
 const GUIDE_LINE_SELECTOR = `[style="right: 33%; top: 0%; width: 1px; height: 100%;"]`;
 const HEADER_BUTTONS_SELECTOR = `header > div > div > button`;
 
-const CAPTION_SELECTOR = 'textarea';
+const CAPTION_SELECTOR = '[aria-label="Write a caption…"]';
 
 (async () => {
   try {
@@ -26,11 +26,10 @@ const CAPTION_SELECTOR = 'textarea';
     redditPost.topComment = appendRandomTags(redditPost.topComment);
     const fileName = await saveImage(redditPost.imageUrl);
 
-    const imagePath = __dirname + '/' + fileName;
-
     await squareImage(fileName);
+    const imagePath = __dirname + '/postimage.png';
 
-    // await simulateBrowser({imagePath, caption: redditPost.topComment });
+    await simulateBrowser({imagePath, caption: redditPost.topComment });
 
   } catch (error) {
     console.error(error);
