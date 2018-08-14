@@ -7,7 +7,7 @@ const config = require('./config');
 /** picks config.tagsCount random tags from config.tags list
  * @return string Stringified list of random tags */
 function pickRandomTags() {
-  const tags = config.tags.sort((a, b) => Math.random() > 0.5 ? 1 : -1);
+  const tags = config.tags.sort((a :string, b :string) => Math.random() > 0.5 ? 1 : -1);
   let res = '';
 
   for (let i = 0; i < config.tagsCount; ++i) {
@@ -17,14 +17,19 @@ function pickRandomTags() {
   return res.trim();
 }
 
-function appendRandomTags(text) {
+function appendRandomTags(text :string) {
   return text + ' ' + pickRandomTags();
+}
+
+type SaveOptions = {
+  url: string;
+  dest: string;
 }
 
 /** saves the image to config.imageName
  * @return {string} image name */
-async function saveImage(url) {
-  const options = {
+async function saveImage(url :string) {
+  const options :SaveOptions = {
     url: url,
     dest: config.imageName + '.' + url.split('.').pop(),
   }
@@ -34,7 +39,10 @@ async function saveImage(url) {
   return filename;
 }
 
-async function squareImage(fileName) {
+/**
+ * Pads an image and makes it square and outputs it to postimage.png
+ * @param fileName The file to add padding to make square */
+async function squareImage(fileName :string) {
   try {
     const dimensions = await sizeOf(fileName);
     const maxDimension = Math.max(dimensions.height, dimensions.width);
@@ -51,4 +59,4 @@ async function squareImage(fileName) {
   }
 }
 
-module.exports = { appendRandomTags, saveImage, squareImage };
+export { appendRandomTags, saveImage, squareImage };
