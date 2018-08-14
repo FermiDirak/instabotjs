@@ -3,6 +3,24 @@ const config = require('./config');
 
 const { imageFormats } = require('./constants');
 
+type Post = {
+  data: {
+    title: string,
+    name: string,
+    id: string,
+    author: string,
+    num_comments: number,
+    permalink: string,
+    url: string,
+  }
+}
+
+type RedditPost = {
+  title: string;
+  imageUrl: string;
+  topComment: string;
+}
+
 /** retrieves a random reddit post from the front page of subreddit */
 async function retrieveRedditPost() {
   try {
@@ -19,12 +37,13 @@ async function retrieveRedditPost() {
   }
 }
 
-/** plucks a random post from list of posts
- * @param {obj} posts Response representing top posts from subreddit
- * @return {obj} instagram ready post data
+/** plucks a random post from a page of reddit posts
+ * @param {Array<Post>} posts A list of posts
+ * @return {RedditPost} instagram ready post data
  */
-async function pluckRandomPost(posts) {
-  posts = posts.sort((a, b) => Math.random() > 0.5 ? 1 : -1);
+async function pluckRandomPost(posts :Array<Post>) {
+
+  posts = posts.sort(() => Math.random() > 0.5 ? 1 : -1);
 
   for (let i = 0; i < 1; ++i) {
     let post = posts[i];
@@ -45,11 +64,13 @@ async function pluckRandomPost(posts) {
       throw error;
     }
 
-    return {
+    const res :RedditPost = {
       title,
       imageUrl,
       topComment,
     };
+
+    return res;
   }
 
 }
@@ -57,7 +78,7 @@ async function pluckRandomPost(posts) {
 /** gets the top comment from the reddit post
  * @param {string} a json representation of the post to retrieve a comment from
  * @return {string} top comment */
-async function getTopComment(post) {
+async function getTopComment(post :Post) {
   try {
     const { permalink } = post.data;
     const commentsUrl = `https://www.reddit.com/${permalink}.json`;
@@ -68,8 +89,8 @@ async function getTopComment(post) {
     return comments[0].data.body;
 
   } catch(error) {
-    return post.title || error;
+    return post.data.title || error;
   }
 }
 
-module.exports = { retrieveRedditPost };
+export { retrieveRedditPost };
