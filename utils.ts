@@ -7,8 +7,8 @@ const config = require('./config');
 /** picks config.tagsCount random tags from config.tags list
  * @return string Stringified list of random tags */
 function pickRandomTags() {
-  const tags = config.tags.sort((a :string, b :string) => Math.random() > 0.5 ? 1 : -1);
-  let res = '';
+  const tags :Array<string> = config.tags.sort((a :string, b :string) => Math.random() > 0.5 ? 1 : -1);
+  let res :string = '';
 
   for (let i = 0; i < config.tagsCount; ++i) {
     res += `#${tags[i]} `;
@@ -17,6 +17,9 @@ function pickRandomTags() {
   return res.trim();
 }
 
+/** appends a random list of tags to the input string
+ * @param {string} text to append tags to
+ * @return {string} text with tags appended */
 function appendRandomTags(text :string) {
   return text + ' ' + pickRandomTags();
 }
