@@ -2,15 +2,18 @@
   "name": "instajs",
   "version": "1.0.0",
   "description": "An app for automating instagram related actions",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "nodemon --exec ./node_modules/.bin/ts-node -- index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Bryan Manuele",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^1.18.3"
+    "@types/node": "^10.7.0",
+    "nodemon": "^1.18.3",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.0.1"
   },
   "dependencies": {
     "axios": "^0.18.0",
