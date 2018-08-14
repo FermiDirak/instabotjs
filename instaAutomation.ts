@@ -3,22 +3,28 @@ const puppeteer = require('puppeteer');
 const config = require('./config');
 const credentials = require('./credetials');
 
-const USERNAME_SELECTOR = '[name="username"]';
-const PASSWORD_SELECTOR = '[name="password"]';
-const LOGIN_SELECTOR = 'form > span > button';
+const USERNAME_SELECTOR: string = '[name="username"]';
+const PASSWORD_SELECTOR: string = '[name="password"]';
+const LOGIN_SELECTOR: string = 'form > span > button';
 
-const NOTNOW_SELECTOR = '[href="/"]';
+const NOTNOW_SELECTOR: string = '[href="/"]';
 
-const NEWPOST_SELECTOR = `[aria-label="New Post"]`;
-const IMAGE_UPLOAD_SELECTOR = '[accept="image/jpeg"]';
+const NEWPOST_SELECTOR: string = `[aria-label="New Post"]`;
+const IMAGE_UPLOAD_SELECTOR: string = '[accept="image/jpeg"]';
 
-const GUIDE_LINE_SELECTOR = `[style="right: 33%; top: 0%; width: 1px; height: 100%;"]`;
-const HEADER_BUTTONS_SELECTOR = `header > div > div > button`;
+const GUIDE_LINE_SELECTOR: string = `[style="right: 33%; top: 0%; width: 1px; height: 100%;"]`;
+const HEADER_BUTTONS_SELECTOR: string = `header > div > div > button`;
 
-const CAPTION_SELECTOR = '[aria-label="Write a caption…"]';
+const CAPTION_SELECTOR: string = '[aria-label="Write a caption…"]';
 
-/** posts content to instagram */
-async function post({ imagePath, caption }) {
+type InstagramPost = {
+  imagePath: string;
+  caption: string;
+}
+
+/** posts content to instagram
+ * @param {InstagramPost} the content you want to post to instagram */
+async function post({ imagePath, caption }: InstagramPost) {
   try {
     const browser = await puppeteer.launch({ headless: false, slowMo: 20 });
     const page = await browser.newPage();
@@ -74,4 +80,4 @@ async function post({ imagePath, caption }) {
   }
 }
 
-module.exports = { post };
+export { post };

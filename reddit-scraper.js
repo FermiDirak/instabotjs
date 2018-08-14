@@ -1,7 +1,7 @@
 const axios = require('axios');
 const config = require('./config');
 
-const { imageTypes } = require('./constants');
+const { imageFormats } = require('./constants');
 
 /** retrieves a random reddit post from the front page of subreddit */
 async function retrieveRedditPost() {
@@ -33,7 +33,7 @@ async function pluckRandomPost(posts) {
 
     const imageUrlSuffix = imageUrl.split('.').pop();
 
-    if (num_comments === 0 || !imageTypes.has(imageUrlSuffix)) {
+    if (num_comments === 0 || !imageFormats.has(imageUrlSuffix)) {
       continue;
     }
 

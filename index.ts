@@ -14,7 +14,9 @@ const { retrieveRedditPost } = require('./reddit-scraper');
     await squareImage(fileName);
     const imagePath = __dirname + '/postimage.png';
 
-    await instaAutomation.post({imagePath, caption: redditPost.topComment });
+    console.log(redditPost);
+
+    // await instaAutomation.post({imagePath, caption: redditPost.topComment });
 
   } catch (error) {
     console.error(error);
