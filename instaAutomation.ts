@@ -108,6 +108,9 @@ type FollowOptions = {
 async function followAll(page :Page, followOptions :FollowOptions) {
   const FOLLOW_BUTTONS_SELECTOR = 'li > div > div > div > button';
 
+  followOptions = followOptions || {};
+  followOptions.infinite = followOptions.infinite || false;
+
   do {
     /* go to instagram suggested follows */
     await page.goto('https://www.instagram.com/explore/people/suggested/');
