@@ -122,9 +122,13 @@ async function followAll(page :Page, followOptions :FollowOptions) {
 
     console.log(followButtons.length);
 
+    followButtons.sort(() => Math.random() > 0.5 ? 1 : -1);
+
     for (let i = lastButtonIndex; i < followButtons.length; ++i) {
       await followButtons[i].focus();
       await followButtons[i].tap();
+
+      await page.waitFor(500 + Math.floor(Math.random() * 500));
     }
 
   } while (followOptions.infinite);

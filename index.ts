@@ -7,19 +7,20 @@ const { retrieveRedditPost } = require('./reddit-scraper');
 /** main */
 (async () => {
   try {
-    const redditPost = await retrieveRedditPost();
-    redditPost.topComment = appendRandomTags(redditPost.topComment);
-    const fileName = await saveImage(redditPost.imageUrl);
-
-    await squareImage(fileName);
-    const imagePath = __dirname + '/postimage.png';
-
-    console.log(redditPost);
 
     const session = await instaAutomation.createSession();
     await instaAutomation.login(session);
 
     while (true) {
+      const redditPost = await retrieveRedditPost();
+      redditPost.topComment = appendRandomTags(redditPost.topComment);
+      const fileName = await saveImage(redditPost.imageUrl);
+
+      await squareImage(fileName);
+      const imagePath = __dirname + '/postimage.png';
+
+      console.log(redditPost);
+
       await instaAutomation.post(session, {imagePath, caption: redditPost.topComment });
       await instaAutomation.followAll(session);
     }
