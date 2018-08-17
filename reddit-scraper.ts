@@ -41,38 +41,38 @@ async function retrieveRedditPost() {
  * @param {Array<Post>} posts A list of posts
  * @return {RedditPost} instagram ready post data
  */
-async function pluckRandomPost(posts :Array<Post>) {
+async function pluckRandomPost(posts :Array<Post>) :Promise<RedditPost> {
 
   posts = posts.sort(() => Math.random() > 0.5 ? 1 : -1);
+  let post = posts[0];
 
-  for (let i = 0; i < 1; ++i) {
-    let post = posts[i];
+  let i = 0;
 
-    const { title, url: imageUrl, num_comments } = post.data;
+  while (true) {
+    if (i >= posts.length) {
+      throw 'out of range';
+    }
+
+    post = posts[i];
+    const { url: imageUrl, num_comments } = post.data;
 
     const imageUrlSuffix = imageUrl.split('.').pop();
 
-    if (num_comments === 0 || !imageFormats.has(imageUrlSuffix)) {
-      continue;
+    if (num_comments > 0 && imageFormats.has(imageUrlSuffix)) {
+      break;
     }
 
-    let topComment = '';
-
-    try {
-      topComment = await getTopComment(post);
-    } catch (error) {
-      throw error;
-    }
-
-    const res :RedditPost = {
-      title,
-      imageUrl,
-      topComment,
-    };
-
-    return res;
+    i += 1;
   }
 
+  const { title, url: imageUrl } = post.data;
+  const topComment = await getTopComment(post);
+
+  return {
+    title,
+    imageUrl,
+    topComment,
+  };
 }
 
 /** gets the top comment from the reddit post
@@ -86,10 +86,10 @@ async function getTopComment(post :Post) {
 
     const comments = response.data[1].data.children;
 
-    return comments[0].data.body;
+    return comments[0].data.body || '';
 
   } catch(error) {
-    return post.data.title || error;
+    return '' + (post.data.title || error);
   }
 }
 
