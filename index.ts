@@ -18,7 +18,7 @@ const { retrieveRedditPost } = require('./reddit-scraper');
 
     const session = await instaAutomation.createSession();
     await instaAutomation.login(session);
-    await instaAutomation.post(session, {imagePath, caption: redditPost.topComment });
+    // await instaAutomation.post(session, {imagePath, caption: redditPost.topComment });
     await instaAutomation.followAll(session);
 
   } catch (error) {

@@ -5,6 +5,7 @@ const credentials = require('./credentials');
 
 type Page = {
   setUserAgent: Function;
+  setViewport: Function;
   goto: Function;
   waitFor: Function;
   tap: Function;
@@ -25,6 +26,7 @@ async function createSession() :Promise<Page> {
   const browser = await puppeteer.launch({ headless: false, slowMo: 20 });
   const page :Page = await browser.newPage();
   page.setUserAgent(config.userAgent);
+  page.setViewport({width: 500, height: 1000});
 
   return page;
 }
@@ -67,7 +69,7 @@ async function post(page :Page, { imagePath, caption } :InstagramPost) {
   const HEADER_BUTTONS_SELECTOR: string = `header > div > div > button`;
   const CAPTION_SELECTOR: string = '[aria-label="Write a caption…"]';
 
-  /* go to login page */
+  /* go to instagram main page */
   await page.goto('https://www.instagram.com');
 
   /* post image */
@@ -97,4 +99,35 @@ async function post(page :Page, { imagePath, caption } :InstagramPost) {
   await headerButtons[1].tap();
 }
 
-export { createSession, login, post };
+/** Follows all users in suggested follows list
+ * @param {Page} The page to act on
+ */
+async function followAll(page :Page) {
+  const FOLLOW_BUTTONS_SELECTOR = 'li > div > div > div > button';
+
+  /* go to instagram suggested follows */
+  await page.goto('https://www.instagram.com/explore/people/suggested/');
+
+  await page.waitFor(FOLLOW_BUTTONS_SELECTOR);
+
+  let followButtons = await page.$$(FOLLOW_BUTTONS_SELECTOR);
+  let lastButtonIndex = 0;
+
+  console.log(followButtons.length);
+
+  // for (let counter = 0; counter < 5; ++counter) {
+
+    for (let i = lastButtonIndex; i < followButtons.length; ++i) {
+      await followButtons[i].focus();
+      await followButtons[i].tap();
+    }
+
+  //   followButtons = await page.$$(FOLLOW_BUTTONS_SELECTOR);
+  //   lastButtonIndex = followButtons.length;
+  // }
+
+
+
+}
+
+export { createSession, login, post, followAll };
