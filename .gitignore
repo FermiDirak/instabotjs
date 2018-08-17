@@ -5,3 +5,5 @@ node_modules
 
 image.*
 postimage.png
+
+package-lock.json

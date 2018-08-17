@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 
 const config = require('./config');
-const credentials = require('./credetials');
+const credentials = require('./credentials');
 
 const USERNAME_SELECTOR: string = '[name="username"]';
 const PASSWORD_SELECTOR: string = '[name="password"]';

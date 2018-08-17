@@ -10,4 +10,4 @@ const credentials: Credentials = {
   password: process.env.PASSWORD,
 };
 
-export { credentials };
+export = credentials;
