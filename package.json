@@ -4,7 +4,7 @@
   "description": "An app for automating instagram related actions",
   "main": "index.ts",
   "bin": {
-    "instabot": "./index.ts"
+    "instabot": "./node_modules/.bin/ts-node -- index.ts"
   },
   "scripts": {
     "build": "tsc; node ./lib/index.js",
