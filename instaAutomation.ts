@@ -128,7 +128,7 @@ async function followAll(page :Page, followOptions :FollowOptions) {
       await followButtons[i].focus();
       await followButtons[i].tap();
 
-      await page.waitFor(500 + Math.floor(Math.random() * 500));
+      await page.waitFor(300 + Math.floor(Math.random() * 300));
     }
 
   } while (followOptions.infinite);

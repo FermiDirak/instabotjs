@@ -7,8 +7,9 @@
     "instabot": "./index.ts"
   },
   "scripts": {
-    "start": "nodemon --exec ./node_modules/.bin/ts-node -- index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc; node ./lib/index.js",
+    "test": "node ./lib/index.js",
+    "start": "nodemon --exec ./node_modules/.bin/ts-node -- index.ts"
   },
   "author": "Bryan Manuele",
   "license": "WTFPL",

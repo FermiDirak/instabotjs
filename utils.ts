@@ -34,8 +34,10 @@ type SaveOptions = {
 async function saveImage(url :string) {
   const options :SaveOptions = {
     url: url,
-    dest: config.imageName + '.' + url.split('.').pop(),
+    dest: __dirname + '/' + config.imageName + '.' + url.split('.').pop(),
   }
+
+  console.log(options.dest);
 
   const { filename } = await imageDownloader.image(options);
 
@@ -55,7 +57,7 @@ async function squareImage(fileName :string) {
       .background({r: 255, g: 255, b: 255, alpha: 1})
       .embed()
       .toFormat('png')
-      .toFile('postimage.png');
+      .toFile(__dirname + '/postimage.png');
 
   } catch (error) {
     throw error;

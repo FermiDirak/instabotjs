@@ -1,5 +1,3 @@
-/** rename this file to config.js */
-
 const config = {
   subreddit: 'memes',
   tags: [
@@ -26,4 +24,4 @@ const config = {
   imageName: 'image',
 }
 
-module.exports = config;
+export = config;

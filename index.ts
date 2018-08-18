@@ -5,32 +5,32 @@ const program = require('commander');
 const instaAutomation = require('./instaAutomation');
 const { retrieveRedditPost } = require('./reddit-scraper');
 
-program
-  .version('1.0.0')
-  .parse(process.argv);
+// program
+//   .version('1.0.0')
+//   .parse(process.argv);
 
-// /** main */
-// (async () => {
-//   try {
+/** main */
+(async () => {
+  try {
 
-//     const session = await instaAutomation.createSession();
-//     await instaAutomation.login(session);
+    const session = await instaAutomation.createSession();
+    await instaAutomation.login(session);
 
-//     while (true) {
-//       const redditPost = await retrieveRedditPost();
-//       redditPost.topComment = appendRandomTags(redditPost.topComment);
-//       const fileName = await saveImage(redditPost.imageUrl);
+    while (true) {
+      const redditPost = await retrieveRedditPost();
+      redditPost.topComment = appendRandomTags(redditPost.topComment);
+      const fileName = await saveImage(redditPost.imageUrl);
 
-//       await squareImage(fileName);
-//       const imagePath = __dirname + '/postimage.png';
+      await squareImage(fileName);
+      const imagePath = __dirname + '/postimage.png';
 
-//       console.log(redditPost);
+      console.log(redditPost);
 
-//       await instaAutomation.post(session, {imagePath, caption: redditPost.topComment });
-//       await instaAutomation.followAll(session);
-//     }
+      await instaAutomation.post(session, {imagePath, caption: redditPost.topComment });
+      await instaAutomation.followAll(session);
+    }
 
-//   } catch (error) {
-//     console.error(error);
-//   }
-// })();
+  } catch (error) {
+    console.error(error);
+  }
+})();
