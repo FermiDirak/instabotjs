@@ -10,11 +10,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const puppeteer = require('puppeteer');
 const config = require('./config');
-const credentials = require('./credentials');
-/** creates a puppeteer session */
-function createSession() {
+/** creates a puppeteer session
+ * @param {boolean} show Whether to run via the browser
+ */
+function createSession(show) {
     return __awaiter(this, void 0, void 0, function* () {
-        const browser = yield puppeteer.launch({ headless: false, slowMo: 20 });
+        const browser = yield puppeteer.launch({ headless: !show, slowMo: show ? 20 : 0 });
         const page = yield browser.newPage();
         page.setUserAgent(config.userAgent);
         page.setViewport({ width: 1000, height: 1000 });
@@ -23,8 +24,9 @@ function createSession() {
 }
 exports.createSession = createSession;
 /** logs onto instagram
- * @param {Page} page the puppeteer page to act on */
-function login(page) {
+ * @param {Page} page the puppeteer page to act on
+ * @param {credentials} credentials Insta account credentials */
+function login(page, { username, password }) {
     return __awaiter(this, void 0, void 0, function* () {
         const USERNAME_SELECTOR = '[name="username"]';
         const PASSWORD_SELECTOR = '[name="password"]';
@@ -36,9 +38,9 @@ function login(page) {
         yield page.waitFor(USERNAME_SELECTOR);
         yield page.waitFor(PASSWORD_SELECTOR);
         yield page.tap(USERNAME_SELECTOR);
-        yield page.keyboard.type(credentials.username);
+        yield page.keyboard.type(username);
         yield page.tap(PASSWORD_SELECTOR);
-        yield page.keyboard.type(credentials.password);
+        yield page.keyboard.type(password);
         yield page.tap(LOGIN_SELECTOR);
         /* dismiss prompt to remember user */
         yield page.waitFor(NOTNOW_SELECTOR);
@@ -92,7 +94,6 @@ function followAll(page, followOptions) {
             yield page.waitFor(FOLLOW_BUTTONS_SELECTOR);
             let followButtons = yield page.$$(FOLLOW_BUTTONS_SELECTOR);
             let lastButtonIndex = 0;
-            console.log(followButtons.length);
             followButtons.sort(() => Math.random() > 0.5 ? 1 : -1);
             for (let i = lastButtonIndex; i < followButtons.length; ++i) {
                 yield followButtons[i].focus();
