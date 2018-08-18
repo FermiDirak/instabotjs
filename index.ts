@@ -9,8 +9,8 @@ const { retrieveRedditPost } = require('./reddit-scraper');
 
 program
   .version('1.0.0', '-v --version')
-  .option('-p, --peppers', 'Add peppers')
-  .option('-P, --pineapple', 'Add pineapple')
+  .option('-u, --username', 'Set instagram account username')
+  .option('-p, --password', 'Set instagram account password')
   .option('-b, --bbq-sauce', 'Add bbq sauce')
   .option('-c, --cheese [type]', 'Add the specified type of cheese [marble]', 'marble')
   .parse(process.argv);
@@ -19,7 +19,7 @@ console.log('you ordered a pizza with:');
 if (program.peppers) console.log('  - peppers');
 if (program.pineapple) console.log('  - pineapple');
 if (program.bbqSauce) console.log('  - bbq');
-console.log('  - %s cheese', program.cheese);
+console.log('  - %s cheesess', program.cheese);
 
 // /** main */
 // (async () => {

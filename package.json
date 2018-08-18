@@ -1,10 +1,10 @@
 {
-  "name": "instajs",
+  "name": "instabotjs",
   "version": "1.0.0",
   "description": "An app for automating instagram related actions",
   "main": "index.ts",
   "bin": {
-    "instajs": "./index.ts"
+    "instabot": "./index.ts"
   },
   "scripts": {
     "build": "tsc; node ./lib/index.js",
