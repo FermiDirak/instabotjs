@@ -127,8 +127,6 @@ async function followAll(page :Page, followOptions :FollowOptions) {
     let followButtons = await page.$$(FOLLOW_BUTTONS_SELECTOR);
     let lastButtonIndex = 0;
 
-    console.log(followButtons.length);
-
     followButtons.sort(() => Math.random() > 0.5 ? 1 : -1);
 
     for (let i = lastButtonIndex; i < followButtons.length; ++i) {

@@ -44,44 +44,32 @@ program
 
   (async () => {
     const session = await instaAutomation.createSession(!!program.show);
+    await instaAutomation.login(session, credentials);
 
     while(true) {
       const { command } = await inquirer.prompt(cliMenuChoices);
 
       if (command === REPOST_OPTION) {
+        const redditPost = await retrieveRedditPost();
+        redditPost.topComment = appendRandomTags(redditPost.topComment);
+        const fileName = await saveImage(redditPost.imageUrl);
+
+        await squareImage(fileName);
+        const imagePath = __dirname + '/postimage.png';
+
+        console.log(redditPost);
+
+        await instaAutomation.post(session, { imagePath, caption: redditPost.topComment });
 
       } else if (command === FOLLOW_OPTION) {
+        await instaAutomation.followAll(session);
+        console.log('followed all suggested users');
 
       } else {
         console.log('instabot exited');
         process.exit(1);
+
       }
 
     }
   })();
-
-// /** main */
-// (async () => {
-//   try {
-
-//     const session = await instaAutomation.createSession();
-//     await instaAutomation.login(session);
-
-//     while (true) {
-//       const redditPost = await retrieveRedditPost();
-//       redditPost.topComment = appendRandomTags(redditPost.topComment);
-//       const fileName = await saveImage(redditPost.imageUrl);
-
-//       await squareImage(fileName);
-//       const imagePath = __dirname + '/postimage.png';
-
-//       console.log(redditPost);
-
-//       await instaAutomation.post(session, {imagePath, caption: redditPost.topComment });
-//       await instaAutomation.followAll(session);
-//     }
-
-//   } catch (error) {
-//     console.error(error);
-//   }
-// })();
