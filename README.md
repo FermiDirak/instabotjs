@@ -1,5 +1,4 @@
-
-#Instabot.js
+# Instabot.js
 
 Instabot JS is an ethical bot that reposts top memes from your favorite subreddit onto instagram and uses the top comment from post's the comment thread as the caption.
 
