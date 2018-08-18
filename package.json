@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Bryan Manuele",
-  "license": "ISC",
+  "license": "WTFPL",
   "devDependencies": {
     "@types/node": "^10.7.0",
     "nodemon": "^1.18.3",
