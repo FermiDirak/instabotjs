@@ -1,7 +1,11 @@
 const puppeteer = require('puppeteer');
 
 const config = require('./config');
-const credentials = require('./credentials');
+
+type Credentials = {
+  username: string;
+  password: string;
+}
 
 type Page = {
   setUserAgent: Function;
@@ -21,9 +25,11 @@ type InstagramPost = {
   caption: string;
 }
 
-/** creates a puppeteer session */
-async function createSession() :Promise<Page> {
-  const browser = await puppeteer.launch({ headless: false, slowMo: 20 });
+/** creates a puppeteer session
+ * @param {boolean} show Whether to run via the browser
+ */
+async function createSession(show :boolean) :Promise<Page> {
+  const browser = await puppeteer.launch({ headless: !show, slowMo: show ? 20 : 0 });
   const page :Page = await browser.newPage();
   page.setUserAgent(config.userAgent);
   page.setViewport({width: 1000, height: 1000});
@@ -32,8 +38,9 @@ async function createSession() :Promise<Page> {
 }
 
 /** logs onto instagram
- * @param {Page} page the puppeteer page to act on */
-async function login(page :Page) {
+ * @param {Page} page the puppeteer page to act on
+ * @param {credentials} credentials Insta account credentials */
+async function login(page :Page, { username, password } :Credentials) {
   const USERNAME_SELECTOR: string = '[name="username"]';
   const PASSWORD_SELECTOR: string = '[name="password"]';
   const LOGIN_SELECTOR: string = 'form > span > button';
@@ -47,10 +54,10 @@ async function login(page :Page) {
   await page.waitFor(PASSWORD_SELECTOR);
 
   await page.tap(USERNAME_SELECTOR);
-  await page.keyboard.type(credentials.username);
+  await page.keyboard.type(username);
 
   await page.tap(PASSWORD_SELECTOR);
-  await page.keyboard.type(credentials.password);
+  await page.keyboard.type(password);
 
   await page.tap(LOGIN_SELECTOR);
 
