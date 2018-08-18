@@ -4,7 +4,7 @@
   "description": "An app for automating instagram related actions",
   "main": "index.ts",
   "bin": {
-    "instabot": "./node_modules/.bin/ts-node -- index.ts"
+    "instajs": "./index.ts"
   },
   "scripts": {
     "build": "tsc; node ./lib/index.js",
@@ -26,6 +26,7 @@
     "image-downloader": "^3.4.1",
     "image-size": "^0.6.3",
     "node-gyp": "^3.8.0",
+    "node-pre-gyp": "^0.11.0",
     "puppeteer": "^1.7.0",
     "sharp": "^0.20.5"
   }
