@@ -1,9 +1,16 @@
 {
   "name": "instabotjs",
   "author": "Bryan Manuele",
-  "version": "2.0.5",
+  "version": "2.1.5",
   "description": "A for instagram posting and following automation",
-  "keywords": ["instagram", "bot", "automation", "reddit", "auto", "insta"],
+  "keywords": [
+    "instagram",
+    "bot",
+    "automation",
+    "reddit",
+    "auto",
+    "insta"
+  ],
   "homepage": "https://www.npmjs.com/package/instabotjs",
   "repository": "https://github.com/fermidirak/instabotjs",
   "bugs": {

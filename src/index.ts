@@ -17,34 +17,45 @@ program
   .option('--show', 'sets instaAutomation to run with a browser')
   .parse(process.argv);
 
-  if (!program.username || !program.password) {
-    console.error(chalk.red('ERROR:') + ' must specify username and password (-h for help)');
-    process.exit(1);
-  }
-
-  const credentials = {
-    username: program.username,
-    password: program.password,
-  };
-
-  const REPOST_OPTION :string = 'repost post from Reddit';
-  const CUSTOM_POST_OPTION :string = 'create custom post';
-  const FOLLOW_OPTION :string = 'follow all from suggested';
-  const EXIT_OPTION :string = 'exit';
-
-  const cliMenuChoices = {
-    type: 'list',
-    name: 'command',
-    message: 'pick an action',
-    choices: [
-      REPOST_OPTION,
-      CUSTOM_POST_OPTION,
-      FOLLOW_OPTION,
-      EXIT_OPTION,
-    ],
-  };
-
   (async () => {
+
+    /* if no password, request password */
+    if (program.username && !program.password) {
+      const { password } = await inquirer.prompt({
+        type: 'password',
+        name: 'password',
+        message: 'password:',
+      });
+
+      program.password = password;
+    }
+
+    if (!program.username || !program.password) {
+      console.error(chalk.red('ERROR:') + ' must specify username and password (-h for help)');
+      process.exit(1);
+    }
+
+    const credentials = {
+      username: program.username,
+      password: program.password,
+    };
+
+    const REPOST_OPTION :string = `repost post from r/${config.subreddit} subreddit`;
+    const CUSTOM_POST_OPTION :string = 'create custom post';
+    const FOLLOW_OPTION :string = 'follow all from suggested';
+    const EXIT_OPTION :string = 'exit';
+
+    const cliMenuChoices = {
+      type: 'list',
+      name: 'command',
+      message: 'pick an action',
+      choices: [
+        REPOST_OPTION,
+        CUSTOM_POST_OPTION,
+        FOLLOW_OPTION,
+        EXIT_OPTION,
+      ],
+    };
 
     try {
 
