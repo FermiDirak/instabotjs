@@ -29,9 +29,6 @@ A step by step series of examples that tell you how to get Instabot running
 cd project-directory
 yarn install // downloads your dependencies
 mv config.example.js config.js // set up your config with the default
-touch .env // set up your environment variables
-
-/* you will need to set you your .env with USERNAME='..' and PASSWORD='..' */
 ```
 
 To see if your instabot is working, try running it with `yarn start`
