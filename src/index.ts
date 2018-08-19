@@ -76,7 +76,7 @@ program
           const post = { imageUrl: redditPost.imageUrl, caption: redditPost.topComment };
 
           console.log(post);
-          console.log('posting successful');
+          console.log('posting...');
 
           await instaAutomation.post(session, post);
 
