@@ -3,8 +3,8 @@ config.js
 
 node_modules
 
-image.*
-postimage.png
+!cache/.gitkeep
+cache/*
 
 package-lock.json
 yarn.lock

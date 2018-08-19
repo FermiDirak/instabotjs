@@ -1,8 +1,19 @@
 {
   "name": "instabotjs",
-  "version": "2.0.0",
-  "description": "An app for automating instagram related actions",
-  "repository": "github.com/fermidirak/instabotjs",
+  "author": "Bryan Manuele",
+  "version": "2.0.1",
+  "description": "An app for automating instagram relatedre actions",
+  "keywords": ["instagram", "bot", "automation", "reddit", "auto", "insta"],
+  "homepage": "https://www.npmjs.com/package/instabotjs",
+  "repository": "https://github.com/fermidirak/instabotjs",
+  "bugs": {
+    "url": "https://github.com/fermidirak/instabotjs/issues",
+    "email": "ManueleBryan@gmail.com"
+  },
+  "license": "WTFPL",
+  "contributors": [
+    "aziz512 <aziz.yokubjonov@gmail.com>"
+  ],
   "main": "index.ts",
   "bin": {
     "instabot": "./build/index.js"
@@ -12,8 +23,6 @@
     "test": "node ./lib/index.js",
     "start": "nodemon --exec ./node_modules/.bin/ts-node -- index.ts"
   },
-  "author": "Bryan Manuele",
-  "license": "WTFPL",
   "devDependencies": {
     "@types/node": "^10.7.0",
     "nodemon": "^1.18.3",
