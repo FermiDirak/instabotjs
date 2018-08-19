@@ -43,33 +43,42 @@ program
   };
 
   (async () => {
-    const session = await instaAutomation.createSession(!!program.show);
-    await instaAutomation.login(session, credentials);
 
-    while(true) {
-      const { command } = await inquirer.prompt(cliMenuChoices);
+    try {
+      const session = await instaAutomation.createSession(!!program.show);
+      await instaAutomation.login(session, credentials);
 
-      if (command === REPOST_OPTION) {
-        const redditPost = await retrieveRedditPost();
-        redditPost.topComment = appendRandomTags(redditPost.topComment);
-        const fileName = await saveImage(redditPost.imageUrl);
+      console.log('successfully logged in');
 
-        await squareImage(fileName);
-        const imagePath = __dirname + '/postimage.png';
+      while(true) {
+        const { command } = await inquirer.prompt(cliMenuChoices);
 
-        console.log(redditPost);
+        if (command === REPOST_OPTION) {
+          const redditPost = await retrieveRedditPost();
+          redditPost.topComment = appendRandomTags(redditPost.topComment);
+          const fileName = await saveImage(redditPost.imageUrl);
 
-        await instaAutomation.post(session, { imagePath, caption: redditPost.topComment });
+          await squareImage(fileName);
+          const imagePath = __dirname + '/postimage.png';
 
-      } else if (command === FOLLOW_OPTION) {
-        await instaAutomation.followAll(session);
-        console.log('followed all suggested users');
+          console.log(redditPost);
 
-      } else {
-        console.log('instabot exited');
-        process.exit(1);
+          await instaAutomation.post(session, { imagePath, caption: redditPost.topComment });
+
+        } else if (command === FOLLOW_OPTION) {
+          await instaAutomation.followAll(session);
+          console.log('followed all suggested users');
+
+        } else {
+          console.log('instabot exited');
+          process.exit(1);
+
+        }
 
       }
 
+    } catch(error) {
+      throw error;
     }
+
   })();
