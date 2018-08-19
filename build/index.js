@@ -66,7 +66,9 @@ program
                 redditPost.topComment = appendRandomTags(redditPost.topComment);
                 const post = { imageUrl: redditPost.imageUrl, caption: redditPost.topComment };
                 console.log(post);
+                console.log('posting successful');
                 yield instaAutomation.post(session, post);
+                console.log('posting successful');
             }
             else if (command === CUSTOM_POST_OPTION) {
                 const { imageUrl } = yield inquirer.prompt({
@@ -86,7 +88,7 @@ program
             }
             else if (command === FOLLOW_OPTION) {
                 const suggestedCount = yield instaAutomation.followAll(session);
-                console.log(`followed all ${suggestedCount} suggested users`);
+                console.log(`followed top ${suggestedCount} suggested users`);
             }
             else {
                 console.log('instabot exited');
