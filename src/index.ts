@@ -1,4 +1,4 @@
-#!/usr/bin/env ts-node
+#!/usr/bin/env node
 
 const program = require('commander');
 const inquirer = require('inquirer');
