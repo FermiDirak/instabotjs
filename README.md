@@ -1,6 +1,6 @@
 # Instabot.js
 
-Instabot JS is an ethical instagram cli-based bot that empowers you to reposts memes from your favorite subreddit onto instagram!
+Instabot JS is an ethical instagram cli-based bot that empowers you to automate reposting memes from your favorite subreddit onto instagram!
 
 This Instagram cli will let you:
 * Reposting memes directly from Reddit
@@ -10,7 +10,7 @@ This Instagram cli will let you:
 ## Getting Started
 
 Install the package: `npm install -g instabotjs`
-Once installed, you can begin using instabot-cli: `$ instabot -h`
+Once installed, you can begin using instabot-cli.
 
 ## Usage
 

@@ -1,7 +1,7 @@
 {
   "name": "instabotjs",
   "author": "Bryan Manuele",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "An app for automating instagram relatedre actions",
   "keywords": ["instagram", "bot", "automation", "reddit", "auto", "insta"],
   "homepage": "https://www.npmjs.com/package/instabotjs",
