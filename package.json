@@ -2,6 +2,7 @@
   "name": "instabotjs",
   "version": "1.0.0",
   "description": "An app for automating instagram related actions",
+  "repository": "github.com/fermidirak/instabotjs",
   "main": "index.ts",
   "bin": {
     "instabot": "./build/index.js"
