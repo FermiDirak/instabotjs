@@ -62,7 +62,7 @@ program
 
           console.log(redditPost);
 
-          await instaAutomation.post(session, { imagePath, caption: redditPost.topComment });
+          await instaAutomation.post(session, { imageUrl: redditPost.imageUrl, caption: redditPost.topComment });
 
         } else if (command === FOLLOW_OPTION) {
           await instaAutomation.followAll(session);

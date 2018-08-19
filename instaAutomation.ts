@@ -82,6 +82,10 @@ async function post(page :Page, { imageUrl, caption } :InstagramPost) {
   /* go to instagram main page */
   await page.goto('https://www.instagram.com');
 
+  /* download image */
+  imageUrl = await saveImage(imageUrl);
+  imageUrl = await squareImage(imageUrl);
+
   /* post image */
   await page.waitFor(NEWPOST_SELECTOR);
   await page.tap(NEWPOST_SELECTOR);

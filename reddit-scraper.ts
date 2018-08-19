@@ -22,14 +22,13 @@ type RedditPost = {
 }
 
 /** retrieves a random reddit post from the front page of subreddit */
-async function retrieveRedditPost() {
+async function retrieveRedditPost() :Promise<RedditPost> {
   try {
     const url = `https://www.reddit.com/r/${config.subreddit}/.json`;
     const response = await axios.get(url);
     const data = await response.data;
 
     const redditPost = await pluckRandomPost(data.data.children);
-
     return redditPost;
 
   } catch (error) {
@@ -39,10 +38,9 @@ async function retrieveRedditPost() {
 
 /** plucks a random post from a page of reddit posts
  * @param {Array<Post>} posts A list of posts
- * @return {RedditPost} instagram ready post data
+ * @return {Promise<RedditPost>} instagram ready post data
  */
 async function pluckRandomPost(posts :Array<Post>) :Promise<RedditPost> {
-
   posts = posts.sort(() => Math.random() > 0.5 ? 1 : -1);
   let post = posts[0];
 
@@ -76,21 +74,15 @@ async function pluckRandomPost(posts :Array<Post>) :Promise<RedditPost> {
 }
 
 /** gets the top comment from the reddit post
- * @param {string} a json representation of the post to retrieve a comment from
- * @return {string} top comment */
-async function getTopComment(post :Post) {
-  try {
+ * @param {Post} a post to retrieve a top comment from
+ * @return {Promise<string>} top comment */
+async function getTopComment(post :Post) :Promise<string> {
     const { permalink } = post.data;
     const commentsUrl = `https://www.reddit.com/${permalink}.json`;
     const response = await axios.get(commentsUrl);
 
     const comments = response.data[1].data.children;
-
-    return comments[0].data.body || '';
-
-  } catch(error) {
-    return '' + (post.data.title || error);
-  }
+    return comments[0].data.body || post.data.title || '';
 }
 
 export { retrieveRedditPost };
