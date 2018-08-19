@@ -36,7 +36,7 @@ function saveImage(url) {
     return __awaiter(this, void 0, void 0, function* () {
         const options = {
             url: url,
-            dest: `${__dirname}/temp.${url.split('.').pop()}`,
+            dest: `${__dirname}/../cache/temp.${url.split('.').pop()}`,
         };
         const { filename } = yield imageDownloader.image(options);
         return filename;
@@ -57,12 +57,12 @@ function squareImage(fileName) {
                 .background({ r: 255, g: 255, b: 255, alpha: 1 })
                 .embed()
                 .toFormat('png')
-                .toFile(__dirname + '/postimage.png');
+                .toFile(`${__dirname}/../cache/postimage.png`);
         }
         catch (error) {
             throw error;
         }
-        return `${__dirname}/postimage.png`;
+        return `${__dirname}/../cache/postimage.png`;
     });
 }
 exports.squareImage = squareImage;

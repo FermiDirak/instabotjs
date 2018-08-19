@@ -46,6 +46,7 @@ const cliMenuChoices = {
 };
 (() => __awaiter(this, void 0, void 0, function* () {
     try {
+        console.log('attempting log in...');
         const session = yield instaAutomation.createSession(!!program.show);
         yield instaAutomation.login(session, credentials);
         console.log('successfully logged in');
@@ -62,16 +63,17 @@ const cliMenuChoices = {
                 const { imageUrl } = yield inquirer.prompt({
                     type: 'input',
                     name: 'imageUrl',
-                    message: 'input url of image to use',
+                    message: 'input url of image to use:',
                 });
                 const { caption } = yield inquirer.prompt({
                     type: 'input',
                     name: 'caption',
-                    message: 'input caption',
+                    message: 'input caption:',
                 });
                 const post = { imageUrl, caption };
-                console.log(post);
+                console.log('posting...');
                 yield instaAutomation.post(session, post);
+                console.log('posting successful');
             }
             else if (command === FOLLOW_OPTION) {
                 const suggestedCount = yield instaAutomation.followAll(session);
