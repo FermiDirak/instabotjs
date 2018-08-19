@@ -76,8 +76,11 @@ program
           const post = { imageUrl: redditPost.imageUrl, caption: redditPost.topComment };
 
           console.log(post);
+          console.log('posting successful');
 
           await instaAutomation.post(session, post);
+
+          console.log('posting successful');
 
         } else if (command === CUSTOM_POST_OPTION) {
           const { imageUrl } = await inquirer.prompt({
