@@ -5,8 +5,8 @@ const sharp = require('sharp');
 const config = require('./config');
 
 /** picks config.tagsCount random tags from config.tags list
- * @return string Stringified list of random tags */
-function pickRandomTags() {
+ * @return {string} Stringified list of random tags */
+function pickRandomTags() :string {
   const tags :Array<string> = config.tags.sort((a :string, b :string) => Math.random() > 0.5 ? 1 : -1);
   let res :string = '';
 
@@ -18,10 +18,10 @@ function pickRandomTags() {
 }
 
 /** appends a random list of tags to the input string
- * @param {string} text to append tags to
+ * @param {string} text Text to append tags to
  * @return {string} text with tags appended */
-function appendRandomTags(text :string) {
-  return text + ' ' + pickRandomTags();
+function appendRandomTags(text :string) :string {
+  return `${text} ${pickRandomTags()}`;
 }
 
 type SaveOptions = {
@@ -30,24 +30,23 @@ type SaveOptions = {
 }
 
 /** saves the image to config.imageName
- * @return {string} image name */
-async function saveImage(url :string) {
+ * @param url THe url to download an image from
+ * @return {Promise<string>} image name */
+async function saveImage(url :string) :Promise<string> {
   const options :SaveOptions = {
     url: url,
     dest: `${__dirname}/temp.${url.split('.').pop()}`,
   }
 
-  console.log(options.dest);
-
   const { filename } = await imageDownloader.image(options);
-
   return filename;
 }
 
 /**
  * Pads an image and makes it square and outputs it to postimage.png
- * @param fileName The file to add padding to make square */
-async function squareImage(fileName :string) {
+ * @param fileName The file to add padding to make square
+ * @return {Promise<string>} The filepatah of the square image */
+async function squareImage(fileName :string) :Promise<string> {
   try {
     const dimensions = await sizeOf(fileName);
     const maxDimension = Math.max(dimensions.height, dimensions.width);
@@ -62,6 +61,8 @@ async function squareImage(fileName :string) {
   } catch (error) {
     throw error;
   }
+
+  return `${__dirname}/postimage.png`;
 }
 
 export { appendRandomTags, saveImage, squareImage };

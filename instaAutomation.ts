@@ -2,10 +2,6 @@ const puppeteer = require('puppeteer');
 
 const config = require('./config');
 
-type Credentials = {
-  username: string;
-  password: string;
-}
 
 type Page = {
   setUserAgent: Function;
@@ -20,11 +16,6 @@ type Page = {
   $$: Function,
 };
 
-type InstagramPost = {
-  imagePath: string;
-  caption: string;
-}
-
 /** creates a puppeteer session
  * @param {boolean} show Whether to run via the browser
  */
@@ -35,6 +26,12 @@ async function createSession(show :boolean) :Promise<Page> {
   page.setViewport({width: 1000, height: 1000});
 
   return page;
+}
+
+
+type Credentials = {
+  username: string;
+  password: string;
 }
 
 /** logs onto instagram
@@ -66,10 +63,16 @@ async function login(page :Page, { username, password } :Credentials) {
   await page.tap(NOTNOW_SELECTOR);
 }
 
+
+type InstagramPost = {
+  imageUrl: string;
+  caption: string;
+}
+
 /** posts content to instagram
  * @param {Page} page The page to act on
  * @param {InstagramPost} the content you want to post to instagram */
-async function post(page :Page, { imagePath, caption } :InstagramPost) {
+async function post(page :Page, { imageUrl, caption } :InstagramPost) {
   const NEWPOST_SELECTOR: string = `[aria-label="New Post"]`;
   const IMAGE_UPLOAD_SELECTOR: string = '[accept="image/jpeg"]';
   const GUIDE_LINE_SELECTOR: string = `[style="right: 33%; top: 0%; width: 1px; height: 100%;"]`;
@@ -81,7 +84,6 @@ async function post(page :Page, { imagePath, caption } :InstagramPost) {
 
   /* post image */
   await page.waitFor(NEWPOST_SELECTOR);
-
   await page.tap(NEWPOST_SELECTOR);
 
   const fileUploadInputs = await page.$$(IMAGE_UPLOAD_SELECTOR);
@@ -89,7 +91,7 @@ async function post(page :Page, { imagePath, caption } :InstagramPost) {
   for (let i = 0; i < fileUploadInputs.length; ++i) {
     let fileUploadInput = fileUploadInputs[i];
 
-    await fileUploadInput.uploadFile(imagePath);
+    await fileUploadInput.uploadFile(imageUrl);
   }
 
   /* confirm image editing */
@@ -105,6 +107,7 @@ async function post(page :Page, { imagePath, caption } :InstagramPost) {
   headerButtons = await page.$$(HEADER_BUTTONS_SELECTOR);
   await headerButtons[1].tap();
 }
+
 
 type FollowOptions = {
   infinite: boolean | undefined;

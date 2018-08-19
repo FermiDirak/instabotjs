@@ -56,10 +56,9 @@ program
         if (command === REPOST_OPTION) {
           const redditPost = await retrieveRedditPost();
           redditPost.topComment = appendRandomTags(redditPost.topComment);
-          const fileName = await saveImage(redditPost.imageUrl);
 
-          await squareImage(fileName);
-          const imagePath = __dirname + '/postimage.png';
+          let fileName = await saveImage(redditPost.imageUrl);
+          fileName = await squareImage(fileName);
 
           console.log(redditPost);
 
