@@ -57,9 +57,12 @@ program
           const redditPost = await retrieveRedditPost();
           redditPost.topComment = appendRandomTags(redditPost.topComment);
 
-          console.log(redditPost);
+          const post = { imageUrl: redditPost.imageUrl, caption: redditPost.topComment };
 
-          await instaAutomation.post(session, { imageUrl: redditPost.imageUrl, caption: redditPost.topComment });
+          console.log(post);
+
+          await instaAutomation.post(session, post);
+
 
         } else if (command === FOLLOW_OPTION) {
           const suggestedCount = await instaAutomation.followAll(session);
