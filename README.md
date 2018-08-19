@@ -17,7 +17,7 @@ Once installed, you can begin using instabot-cli.
 `$ instabot [options]`
 
 To start instabot, run:
-`instabot -u "Instagram Username" -p "Instagram Password"`
+`instabot -u "Instagram Username"`
 
 Once your instagram is logged in via puppeteer, select an action:
 ```
