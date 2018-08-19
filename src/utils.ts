@@ -35,7 +35,7 @@ type SaveOptions = {
 async function saveImage(url :string) :Promise<string> {
   const options :SaveOptions = {
     url: url,
-    dest: `${__dirname}/temp.${url.split('.').pop()}`,
+    dest: `${__dirname}/../cache/temp.${url.split('.').pop()}`,
   }
 
   const { filename } = await imageDownloader.image(options);
@@ -56,13 +56,13 @@ async function squareImage(fileName :string) :Promise<string> {
       .background({r: 255, g: 255, b: 255, alpha: 1})
       .embed()
       .toFormat('png')
-      .toFile(__dirname + '/postimage.png');
+      .toFile(`${__dirname}/../cache/postimage.png`);
 
   } catch (error) {
     throw error;
   }
 
-  return `${__dirname}/postimage.png`;
+  return `${__dirname}/../cache/postimage.png`;
 }
 
 export { appendRandomTags, saveImage, squareImage };
