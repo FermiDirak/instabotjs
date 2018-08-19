@@ -66,7 +66,7 @@ program
                 redditPost.topComment = appendRandomTags(redditPost.topComment);
                 const post = { imageUrl: redditPost.imageUrl, caption: redditPost.topComment };
                 console.log(post);
-                console.log('posting successful');
+                console.log('posting...');
                 yield instaAutomation.post(session, post);
                 console.log('posting successful');
             }
