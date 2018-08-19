@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
 
+const { saveImage, squareImage } = require('./utils');
 const config = require('./config');
 
 
@@ -118,12 +119,15 @@ type FollowOptions = {
 }
 
 /** Follows all users in suggested follows list
- * @param {Page} The page to act on */
-async function followAll(page :Page, followOptions :FollowOptions) {
+ * @param {Page} The page to act on
+ * @return {Promise<number>} The count of followers clicked on */
+async function followAll(page :Page, followOptions :FollowOptions) :Promise<number> {
   const FOLLOW_BUTTONS_SELECTOR = 'li > div > div > div > button';
 
   followOptions = followOptions || {};
   followOptions.infinite = followOptions.infinite || false;
+
+  let followCount = 0;
 
   do {
     /* go to instagram suggested follows */
@@ -132,6 +136,8 @@ async function followAll(page :Page, followOptions :FollowOptions) {
     await page.waitFor(FOLLOW_BUTTONS_SELECTOR);
 
     let followButtons = await page.$$(FOLLOW_BUTTONS_SELECTOR);
+    followCount += followButtons.length;
+
     let lastButtonIndex = 0;
 
     followButtons.sort(() => Math.random() > 0.5 ? 1 : -1);
@@ -144,6 +150,8 @@ async function followAll(page :Page, followOptions :FollowOptions) {
     }
 
   } while (followOptions.infinite);
+
+  return followCount;
 
 }
 

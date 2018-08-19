@@ -1,10 +1,10 @@
-#!/usr/bin/env node
+#!/usr/bin/env ts-node
 
 const program = require('commander');
 const inquirer = require('inquirer');
 const chalk = require('chalk');
 
-const { appendRandomTags, saveImage, squareImage } = require('./utils');
+const { appendRandomTags } = require('./utils');
 const config = require('./config');
 
 const instaAutomation = require('./instaAutomation');
@@ -57,16 +57,13 @@ program
           const redditPost = await retrieveRedditPost();
           redditPost.topComment = appendRandomTags(redditPost.topComment);
 
-          let fileName = await saveImage(redditPost.imageUrl);
-          fileName = await squareImage(fileName);
-
           console.log(redditPost);
 
           await instaAutomation.post(session, { imageUrl: redditPost.imageUrl, caption: redditPost.topComment });
 
         } else if (command === FOLLOW_OPTION) {
-          await instaAutomation.followAll(session);
-          console.log('followed all suggested users');
+          const suggestedCount = await instaAutomation.followAll(session);
+          console.log(`followed all ${suggestedCount} suggested users`);
 
         } else {
           console.log('instabot exited');

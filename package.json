@@ -5,7 +5,7 @@
   "repository": "github.com/fermidirak/instabotjs",
   "main": "index.ts",
   "bin": {
-    "instabot": "./build/index.js"
+    "instabot": "./index.ts"
   },
   "scripts": {
     "build": "tsc",

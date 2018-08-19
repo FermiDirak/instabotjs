@@ -29,7 +29,7 @@ function retrieveRedditPost() {
 exports.retrieveRedditPost = retrieveRedditPost;
 /** plucks a random post from a page of reddit posts
  * @param {Array<Post>} posts A list of posts
- * @return {RedditPost} instagram ready post data
+ * @return {Promise<RedditPost>} instagram ready post data
  */
 function pluckRandomPost(posts) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -58,19 +58,14 @@ function pluckRandomPost(posts) {
     });
 }
 /** gets the top comment from the reddit post
- * @param {string} a json representation of the post to retrieve a comment from
- * @return {string} top comment */
+ * @param {Post} a post to retrieve a top comment from
+ * @return {Promise<string>} top comment */
 function getTopComment(post) {
     return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const { permalink } = post.data;
-            const commentsUrl = `https://www.reddit.com/${permalink}.json`;
-            const response = yield axios.get(commentsUrl);
-            const comments = response.data[1].data.children;
-            return comments[0].data.body || '';
-        }
-        catch (error) {
-            return '' + (post.data.title || error);
-        }
+        const { permalink } = post.data;
+        const commentsUrl = `https://www.reddit.com/${permalink}.json`;
+        const response = yield axios.get(commentsUrl);
+        const comments = response.data[1].data.children;
+        return comments[0].data.body || post.data.title || '';
     });
 }

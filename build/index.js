@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env ts-node
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -11,13 +11,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 const program = require('commander');
 const inquirer = require('inquirer');
 const chalk = require('chalk');
-const { appendRandomTags, saveImage, squareImage } = require('./utils');
+const { appendRandomTags } = require('./utils');
 const config = require('./config');
 const instaAutomation = require('./instaAutomation');
 const { retrieveRedditPost } = require('./reddit-scraper');
-
-console.log('hi');
-
 program
     .version('1.0.0', '-v --version')
     .option('-u, --username [value]', 'Set instagram account username')
@@ -46,26 +43,29 @@ const cliMenuChoices = {
     ],
 };
 (() => __awaiter(this, void 0, void 0, function* () {
-    const session = yield instaAutomation.createSession(!!program.show);
-    yield instaAutomation.login(session, credentials);
-    while (true) {
-        const { command } = yield inquirer.prompt(cliMenuChoices);
-        if (command === REPOST_OPTION) {
-            const redditPost = yield retrieveRedditPost();
-            redditPost.topComment = appendRandomTags(redditPost.topComment);
-            const fileName = yield saveImage(redditPost.imageUrl);
-            yield squareImage(fileName);
-            const imagePath = __dirname + '/postimage.png';
-            console.log(redditPost);
-            yield instaAutomation.post(session, { imagePath, caption: redditPost.topComment });
+    try {
+        const session = yield instaAutomation.createSession(!!program.show);
+        yield instaAutomation.login(session, credentials);
+        console.log('successfully logged in');
+        while (true) {
+            const { command } = yield inquirer.prompt(cliMenuChoices);
+            if (command === REPOST_OPTION) {
+                const redditPost = yield retrieveRedditPost();
+                redditPost.topComment = appendRandomTags(redditPost.topComment);
+                console.log(redditPost);
+                yield instaAutomation.post(session, { imageUrl: redditPost.imageUrl, caption: redditPost.topComment });
+            }
+            else if (command === FOLLOW_OPTION) {
+                yield instaAutomation.followAll(session);
+                console.log('followed all suggested users');
+            }
+            else {
+                console.log('instabot exited');
+                process.exit(1);
+            }
         }
-        else if (command === FOLLOW_OPTION) {
-            yield instaAutomation.followAll(session);
-            console.log('followed all suggested users');
-        }
-        else {
-            console.log('instabot exited');
-            process.exit(1);
-        }
+    }
+    catch (error) {
+        throw error;
     }
 }))();

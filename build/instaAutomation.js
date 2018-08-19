@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const puppeteer = require('puppeteer');
+const { saveImage, squareImage } = require('./utils');
 const config = require('./config');
 /** creates a puppeteer session
  * @param {boolean} show Whether to run via the browser
@@ -51,7 +52,7 @@ exports.login = login;
 /** posts content to instagram
  * @param {Page} page The page to act on
  * @param {InstagramPost} the content you want to post to instagram */
-function post(page, { imagePath, caption }) {
+function post(page, { imageUrl, caption }) {
     return __awaiter(this, void 0, void 0, function* () {
         const NEWPOST_SELECTOR = `[aria-label="New Post"]`;
         const IMAGE_UPLOAD_SELECTOR = '[accept="image/jpeg"]';
@@ -60,13 +61,16 @@ function post(page, { imagePath, caption }) {
         const CAPTION_SELECTOR = '[aria-label="Write a caption…"]';
         /* go to instagram main page */
         yield page.goto('https://www.instagram.com');
+        /* download image */
+        imageUrl = yield saveImage(imageUrl);
+        imageUrl = yield squareImage(imageUrl);
         /* post image */
         yield page.waitFor(NEWPOST_SELECTOR);
         yield page.tap(NEWPOST_SELECTOR);
         const fileUploadInputs = yield page.$$(IMAGE_UPLOAD_SELECTOR);
         for (let i = 0; i < fileUploadInputs.length; ++i) {
             let fileUploadInput = fileUploadInputs[i];
-            yield fileUploadInput.uploadFile(imagePath);
+            yield fileUploadInput.uploadFile(imageUrl);
         }
         /* confirm image editing */
         yield page.waitFor(GUIDE_LINE_SELECTOR);
