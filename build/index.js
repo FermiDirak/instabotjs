@@ -52,12 +52,13 @@ const cliMenuChoices = {
             if (command === REPOST_OPTION) {
                 const redditPost = yield retrieveRedditPost();
                 redditPost.topComment = appendRandomTags(redditPost.topComment);
-                console.log(redditPost);
-                yield instaAutomation.post(session, { imageUrl: redditPost.imageUrl, caption: redditPost.topComment });
+                const post = { imageUrl: redditPost.imageUrl, caption: redditPost.topComment };
+                console.log(post);
+                yield instaAutomation.post(session, post);
             }
             else if (command === FOLLOW_OPTION) {
-                yield instaAutomation.followAll(session);
-                console.log('followed all suggested users');
+                const suggestedCount = yield instaAutomation.followAll(session);
+                console.log(`followed all ${suggestedCount} suggested users`);
             }
             else {
                 console.log('instabot exited');

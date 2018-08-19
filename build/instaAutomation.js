@@ -86,17 +86,20 @@ function post(page, { imageUrl, caption }) {
 }
 exports.post = post;
 /** Follows all users in suggested follows list
- * @param {Page} The page to act on */
+ * @param {Page} The page to act on
+ * @return {Promise<number>} The count of followers clicked on */
 function followAll(page, followOptions) {
     return __awaiter(this, void 0, void 0, function* () {
         const FOLLOW_BUTTONS_SELECTOR = 'li > div > div > div > button';
         followOptions = followOptions || {};
         followOptions.infinite = followOptions.infinite || false;
+        let followCount = 0;
         do {
             /* go to instagram suggested follows */
             yield page.goto('https://www.instagram.com/explore/people/suggested/');
             yield page.waitFor(FOLLOW_BUTTONS_SELECTOR);
             let followButtons = yield page.$$(FOLLOW_BUTTONS_SELECTOR);
+            followCount += followButtons.length;
             let lastButtonIndex = 0;
             followButtons.sort(() => Math.random() > 0.5 ? 1 : -1);
             for (let i = lastButtonIndex; i < followButtons.length; ++i) {
@@ -105,6 +108,7 @@ function followAll(page, followOptions) {
                 yield page.waitFor(300 + Math.floor(Math.random() * 300));
             }
         } while (followOptions.infinite);
+        return followCount;
     });
 }
 exports.followAll = followAll;
