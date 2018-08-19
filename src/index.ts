@@ -102,7 +102,7 @@ program
 
         } else if (command === FOLLOW_OPTION) {
           const suggestedCount = await instaAutomation.followAll(session);
-          console.log(`followed all ${suggestedCount} suggested users`);
+          console.log(`followed top ${suggestedCount} suggested users`);
 
         } else {
           console.log('instabot exited');
