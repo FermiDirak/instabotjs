@@ -22,8 +22,9 @@ To start instabot, run:
 Once your instagram is logged in via puppeteer, select an action:
 ```
 ❯ 1) repost post from Reddit
-❯ 2) follow all from suggested
-❯ 3) exit
+❯ 2) create a custom post
+❯ 3) follow all from suggested
+❯ 4) exit
 ```
 
 ## Built With
