@@ -14,6 +14,8 @@ Once installed, you can begin using instabot-cli.
 
 ## Usage
 
+[![asciicast](https://asciinema.org/a/bVmCWmGyaYyaDOUYB7AeKDbxW)](https://asciinema.org/a/bVmCWmGyaYyaDOUYB7AeKDbxW)
+
 `$ instabot [options]`
 
 To start instabot, run:
