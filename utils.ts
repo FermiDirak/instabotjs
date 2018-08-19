@@ -34,7 +34,7 @@ type SaveOptions = {
 async function saveImage(url :string) {
   const options :SaveOptions = {
     url: url,
-    dest: __dirname + '/' + config.imageName + '.' + url.split('.').pop(),
+    dest: `${__dirname}/temp.${url.split('.').pop()}`,
   }
 
   console.log(options.dest);

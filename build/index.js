@@ -15,6 +15,9 @@ const { appendRandomTags, saveImage, squareImage } = require('./utils');
 const config = require('./config');
 const instaAutomation = require('./instaAutomation');
 const { retrieveRedditPost } = require('./reddit-scraper');
+
+console.log('hi');
+
 program
     .version('1.0.0', '-v --version')
     .option('-u, --username [value]', 'Set instagram account username')
