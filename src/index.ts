@@ -28,6 +28,7 @@ program
   };
 
   const REPOST_OPTION :string = 'repost post from Reddit';
+  const CUSTOM_POST_OPTION :string = 'create custom post';
   const FOLLOW_OPTION :string = 'follow all from suggested';
   const EXIT_OPTION :string = 'exit';
 
@@ -37,6 +38,7 @@ program
     message: 'pick an action',
     choices: [
       REPOST_OPTION,
+      CUSTOM_POST_OPTION,
       FOLLOW_OPTION,
       EXIT_OPTION,
     ],
@@ -45,6 +47,9 @@ program
   (async () => {
 
     try {
+
+      console.log('attempting log in...');
+
       const session = await instaAutomation.createSession(!!program.show);
       await instaAutomation.login(session, credentials);
 
@@ -63,6 +68,26 @@ program
 
           await instaAutomation.post(session, post);
 
+        } else if (command === CUSTOM_POST_OPTION) {
+          const { imageUrl } = await inquirer.prompt({
+            type: 'input',
+            name: 'imageUrl',
+            message: 'input url of image to use:',
+          });
+
+          const { caption } = await inquirer.prompt({
+            type: 'input',
+            name: 'caption',
+            message: 'input caption:',
+          });
+
+          const post = { imageUrl, caption };
+
+          console.log('posting...');
+
+          await instaAutomation.post(session, post);
+
+          console.log('posting successful');
 
         } else if (command === FOLLOW_OPTION) {
           const suggestedCount = await instaAutomation.followAll(session);

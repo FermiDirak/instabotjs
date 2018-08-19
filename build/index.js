@@ -30,6 +30,7 @@ const credentials = {
     password: program.password,
 };
 const REPOST_OPTION = 'repost post from Reddit';
+const CUSTOM_POST_OPTION = 'create custom post';
 const FOLLOW_OPTION = 'follow all from suggested';
 const EXIT_OPTION = 'exit';
 const cliMenuChoices = {
@@ -38,6 +39,7 @@ const cliMenuChoices = {
     message: 'pick an action',
     choices: [
         REPOST_OPTION,
+        CUSTOM_POST_OPTION,
         FOLLOW_OPTION,
         EXIT_OPTION,
     ],
@@ -53,6 +55,21 @@ const cliMenuChoices = {
                 const redditPost = yield retrieveRedditPost();
                 redditPost.topComment = appendRandomTags(redditPost.topComment);
                 const post = { imageUrl: redditPost.imageUrl, caption: redditPost.topComment };
+                console.log(post);
+                yield instaAutomation.post(session, post);
+            }
+            else if (command === CUSTOM_POST_OPTION) {
+                const { imageUrl } = yield inquirer.prompt({
+                    type: 'input',
+                    name: 'imageUrl',
+                    message: 'input url of image to use',
+                });
+                const { caption } = yield inquirer.prompt({
+                    type: 'input',
+                    name: 'caption',
+                    message: 'input caption',
+                });
+                const post = { imageUrl, caption };
                 console.log(post);
                 yield instaAutomation.post(session, post);
             }
