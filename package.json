@@ -1,7 +1,7 @@
 {
   "name": "instabotjs",
   "author": "Bryan Manuele",
-  "version": "2.4.11",
+  "version": "2.5.11",
   "description": "A cli app for Instagram posting and following automation",
   "keywords": [
     "instagram",

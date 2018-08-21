@@ -1,6 +1,6 @@
 "use strict";
 const config = {
-    subreddit: 'memes',
+    subreddits: ['memes'],
     tags: [
         'memes',
         'funny',

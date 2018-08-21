@@ -15,7 +15,8 @@ const { imageFormats } = require('./constants');
 function retrieveRedditPost() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const url = `https://www.reddit.com/r/${config.subreddit}/.json`;
+            const subreddit = config.subreddits[Math.floor(Math.random() * config.subreddits.length)];
+            const url = `https://www.reddit.com/r/${subreddit}/.json`;
             const response = yield axios.get(url);
             const data = yield response.data;
             const redditPost = yield pluckRandomPost(data.data.children);

@@ -1,5 +1,5 @@
 const config = {
-  subreddit: 'memes',
+  subreddits: ['memes'],
   tags: [
     'memes',
     'funny',

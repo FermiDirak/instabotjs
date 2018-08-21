@@ -24,7 +24,9 @@ type RedditPost = {
 /** retrieves a random reddit post from the front page of subreddit */
 async function retrieveRedditPost() :Promise<RedditPost> {
   try {
-    const url = `https://www.reddit.com/r/${config.subreddit}/.json`;
+    const subreddit = config.subreddits[Math.floor(Math.random() * config.subreddits.length)];
+
+    const url = `https://www.reddit.com/r/${subreddit}/.json`;
     const response = await axios.get(url);
     const data = await response.data;
 
