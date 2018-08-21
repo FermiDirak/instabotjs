@@ -21,6 +21,7 @@ program
     .option('-p, --password [value]', 'Set instagram account password')
     .option('--show', 'sets instaAutomation to run with a browser')
     .option('--repost', 'reposts a post from reddit onto Instagram')
+    .option('--follow', 'follows all suggested users')
     .parse(process.argv);
 (() => __awaiter(this, void 0, void 0, function* () {
     /* if no password, request password */
@@ -40,6 +41,14 @@ program
         username: program.username,
         password: program.password,
     };
+    /* follow option ticked */
+    if (program.follow) {
+        const session = yield instaAutomation.createSession(!!program.show);
+        yield instaAutomation.login(session, credentials);
+        const suggestedCount = yield instaAutomation.followAll(session);
+        process.exit(0);
+    }
+    /* repost option ticked */
     if (program.repost) {
         const session = yield instaAutomation.createSession(!!program.show);
         yield instaAutomation.login(session, credentials);

@@ -42,17 +42,6 @@ program
       password: program.password,
     };
 
-    /* follow option ticked */
-
-    if (program.follow) {
-      const session = await instaAutomation.createSession(!!program.show);
-      await instaAutomation.login(session, credentials);
-
-      const suggestedCount = await instaAutomation.followAll(session);
-
-      process.exit(0);
-    }
-
     /* repost option ticked */
 
     if (program.repost) {
@@ -63,10 +52,21 @@ program
       redditPost.topComment = appendRandomTags(redditPost.topComment);
       const post = { imageUrl: redditPost.imageUrl, caption: redditPost.topComment };
       await instaAutomation.post(session, post);
-
-      process.exit(0);
     }
 
+    /* follow option ticked */
+
+    if (program.follow) {
+      const session = await instaAutomation.createSession(!!program.show);
+      await instaAutomation.login(session, credentials);
+
+      const suggestedCount = await instaAutomation.followAll(session);
+    }
+
+    /* exit if running action from option parameter */
+    if (program.repost || program.follow) {
+      process.exit(0);
+    }
 
     /* Cli menu */
 
