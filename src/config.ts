@@ -1,5 +1,5 @@
 const config = {
-  subreddits: ['memes'],
+  subreddits: ['memes', 'funny', 'lol', 'comics', 'ComedyCemetery', 'cats', 'fffffffuuuuuuuuuuuu', 'FellowKids', 'BlackPeopleTwitter', 'iamverysmart'],
   tags: [
     'memes',
     'funny',
