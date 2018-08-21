@@ -15,6 +15,7 @@ program
   .option('-u, --username [value]', 'Set instagram account username')
   .option('-p, --password [value]', 'Set instagram account password')
   .option('--show', 'sets instaAutomation to run with a browser')
+  .option('--repost', 'reposts a post from reddit onto Instagram')
   .parse(process.argv);
 
   (async () => {
@@ -39,6 +40,21 @@ program
       username: program.username,
       password: program.password,
     };
+
+    if (program.repost) {
+      const session = await instaAutomation.createSession(!!program.show);
+      await instaAutomation.login(session, credentials);
+
+      const redditPost = await retrieveRedditPost();
+      redditPost.topComment = appendRandomTags(redditPost.topComment);
+      const post = { imageUrl: redditPost.imageUrl, caption: redditPost.topComment };
+      await instaAutomation.post(session, post);
+
+      process.exit(0);
+    }
+
+
+    /* Cli menu */
 
     const REPOST_OPTION :string = `repost post from r/${config.subreddit} subreddit`;
     const CUSTOM_POST_OPTION :string = 'create custom post';
