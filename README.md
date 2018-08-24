@@ -44,7 +44,13 @@ If you contribute to this project your name will be added to the contributors li
 
 ## Versioning
 
-There currently is no versioning as this package is still in pre-release.
+InstabotJS follows semantic versioning following the syntax `MAJOR.MINOR.PATCH`
+
+## Future Features
+
+* Ability to pass in environmental variables to specify which subreddits to pull content from
+* Integration of a SQLite database for storing visited Reddit IDs to ensure content isn't reposted twice
+* More robust follow and refollow capabilities
 
 ## License
 
