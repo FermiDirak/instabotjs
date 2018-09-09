@@ -49,12 +49,14 @@ program
         redditPost.topComment = appendRandomTags(redditPost.topComment);
         const post = { imageUrl: redditPost.imageUrl, caption: redditPost.topComment };
         yield instaAutomation.post(session, post);
+        yield session.close();
     }
     /* follow option ticked */
     if (program.follow) {
         const session = yield instaAutomation.createSession(!!program.show);
         yield instaAutomation.login(session, credentials);
         const suggestedCount = yield instaAutomation.followAll(session);
+        yield session.close();
     }
     /* exit if running action from option parameter */
     if (program.repost || program.follow) {
@@ -114,6 +116,7 @@ program
             }
             else {
                 console.log('instabot exited');
+                yield session.close();
                 process.exit(1);
             }
         }
