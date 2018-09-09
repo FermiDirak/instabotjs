@@ -49,21 +49,19 @@ program
         redditPost.topComment = appendRandomTags(redditPost.topComment);
         const post = { imageUrl: redditPost.imageUrl, caption: redditPost.topComment };
         yield instaAutomation.post(session, post);
-        yield session.close();
     }
     /* follow option ticked */
     if (program.follow) {
         const session = yield instaAutomation.createSession(!!program.show);
         yield instaAutomation.login(session, credentials);
         const suggestedCount = yield instaAutomation.followAll(session);
-        yield session.close();
     }
     /* exit if running action from option parameter */
     if (program.repost || program.follow) {
         process.exit(0);
     }
     /* Cli menu */
-    const REPOST_OPTION = `repost post from r/${config.subreddit} subreddit`;
+    const REPOST_OPTION = `repost post from r/${config.subreddits[0]} subreddit`;
     const CUSTOM_POST_OPTION = 'create custom post';
     const FOLLOW_OPTION = 'follow all from suggested';
     const EXIT_OPTION = 'exit';
@@ -116,8 +114,7 @@ program
             }
             else {
                 console.log('instabot exited');
-                yield session.close();
-                process.exit(1);
+                process.exit(0);
             }
         }
     }

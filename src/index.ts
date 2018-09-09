@@ -52,8 +52,6 @@ program
       redditPost.topComment = appendRandomTags(redditPost.topComment);
       const post = { imageUrl: redditPost.imageUrl, caption: redditPost.topComment };
       await instaAutomation.post(session, post);
-
-      await session.close();
     }
 
     /* follow option ticked */
@@ -63,8 +61,6 @@ program
       await instaAutomation.login(session, credentials);
 
       const suggestedCount = await instaAutomation.followAll(session);
-
-      await session.close();
     }
 
     /* exit if running action from option parameter */
@@ -74,7 +70,7 @@ program
 
     /* Cli menu */
 
-    const REPOST_OPTION :string = `repost post from r/${config.subreddit} subreddit`;
+    const REPOST_OPTION :string = `repost post from r/${config.subreddits[0]} subreddit`;
     const CUSTOM_POST_OPTION :string = 'create custom post';
     const FOLLOW_OPTION :string = 'follow all from suggested';
     const EXIT_OPTION :string = 'exit';
@@ -144,9 +140,7 @@ program
         } else {
           console.log('instabot exited');
 
-          await session.close();
-          process.exit(1);
-
+          process.exit(0);
         }
 
       }
