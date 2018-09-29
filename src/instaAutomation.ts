@@ -3,7 +3,6 @@ const puppeteer = require('puppeteer');
 const { saveImage, squareImage } = require('./utils');
 const config = require('./config');
 
-
 type Page = {
   setUserAgent: Function;
   setViewport: Function;
@@ -15,6 +14,7 @@ type Page = {
   },
   $: Function,
   $$: Function,
+  endSession: Function
 };
 
 /** creates a puppeteer session
@@ -25,6 +25,10 @@ async function createSession(show :boolean) :Promise<Page> {
   const page :Page = await browser.newPage();
   page.setUserAgent(config.userAgent);
   page.setViewport({width: 1000, height: 1000});
+
+  page.endSession = () => {
+    browser.close();
+  }
 
   return page;
 }

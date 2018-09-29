@@ -20,6 +20,9 @@ function createSession(show) {
         const page = yield browser.newPage();
         page.setUserAgent(config.userAgent);
         page.setViewport({ width: 1000, height: 1000 });
+        page.endSession = () => {
+            browser.close();
+        };
         return page;
     });
 }
