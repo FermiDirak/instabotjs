@@ -34,7 +34,7 @@ function login(page, { username, password }) {
     return __awaiter(this, void 0, void 0, function* () {
         const USERNAME_SELECTOR = '[name="username"]';
         const PASSWORD_SELECTOR = '[name="password"]';
-        const LOGIN_SELECTOR = 'form > span > button';
+        const LOGIN_SELECTOR = 'form > div > button';
         const NOTNOW_SELECTOR = '[href="/"]';
         /* go to login page */
         yield page.goto('https://www.instagram.com/accounts/login/');

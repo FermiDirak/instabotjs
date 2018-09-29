@@ -45,7 +45,7 @@ type Credentials = {
 async function login(page :Page, { username, password } :Credentials) {
   const USERNAME_SELECTOR: string = '[name="username"]';
   const PASSWORD_SELECTOR: string = '[name="password"]';
-  const LOGIN_SELECTOR: string = 'form > span > button';
+  const LOGIN_SELECTOR: string = 'form > div > button';
   const NOTNOW_SELECTOR: string = '[href="/"]';
 
   /* go to login page */
