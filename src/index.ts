@@ -52,6 +52,8 @@ program
       redditPost.topComment = appendRandomTags(redditPost.topComment);
       const post = { imageUrl: redditPost.imageUrl, caption: redditPost.topComment };
       await instaAutomation.post(session, post);
+
+      await session.endSession();
     }
 
     /* follow option ticked */
@@ -61,6 +63,8 @@ program
       await instaAutomation.login(session, credentials);
 
       const suggestedCount = await instaAutomation.followAll(session);
+
+      await session.endSession();
     }
 
     /* exit if running action from option parameter */
@@ -140,6 +144,7 @@ program
         } else {
           console.log('instabot exited');
 
+          await session.endSession();
           process.exit(0);
         }
 
